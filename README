@@ -1,0 +1,6 @@
+able_display runs on RasPi2 inside the ABLE black box with four 7-segment displays.
+
+It reads the data from /dev/shm/fr24_data
+It also uses Tailscale to read data from file able-live:/dev/shm/pilotaware_data (see able_data_client.sh)
+
+It relies on able_fr24 which runs on this host under service able_fr24. This writes the data file.
