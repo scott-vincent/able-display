@@ -34,15 +34,9 @@ int checkInternet() {
 
 ///
 // Returns 0 on success
-// Errors:
-//   1 = No internet
-//   2 = Failed to connect to Tailscale server (wrong URL?)
-//   3 = Tailscale error (funnel not enabled?)
-//   4 = File not found (raspi5:/home/pi/flightradar_able/able_data2)
-//   9 = Internal error
 ///
 int fetchData() {
-    FILE *pipe = popen("/home/pi/able_display2/able_data_client.py", "r");
+    FILE *pipe = popen("/home/pi/able-display/get_able_data.py`", "r");
     if (!pipe) {
         return 9;
     }
