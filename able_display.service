@@ -5,8 +5,10 @@ StartLimitIntervalSec=10
 
 [Service]
 User=pi
+ExecStartPre=/bin/sh -c 'until ping -c1 google.com; do sleep 10; done;'
 ExecStart=/home/pi/able-display/able_display
 Restart=on-failure
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
