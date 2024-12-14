@@ -5,7 +5,7 @@ StartLimitIntervalSec=10
 
 [Service]
 User=pi
-ExecStart=/home/pi/able_display/able_display
+ExecStart=/home/pi/able-display/able_display
 Restart=on-failure
 
 [Install]
