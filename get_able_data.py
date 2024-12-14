@@ -11,7 +11,7 @@ with open(ableLiveUrl) as inf:
 
 try:
     with open(fr24Data) as inf:
-        data = inf.read()
+        data = inf.read(35)
 
     if len(data) < 35:
         print("No data yet")
@@ -25,7 +25,7 @@ try:
     paData = urllib.request.urlopen(ableLive).read(35).decode("utf-8")
 
     if len(paData) < 35:
-        print(data, end="")
+        print(data)
         sys.exit(0)
 
     dataArr = list(data)
@@ -35,8 +35,8 @@ try:
             dataArr[pos] = paData[pos]
             dataArr[pos+1] = paData[pos+1]
 
-    print("".join(dataArr), end="")
+    print("".join(dataArr))
 except urllib.error.HTTPError as e:
-    print(data, end="")
+    print(data)
 except urllib.error.URLError as e:
-    print(data, end="")
+    print(data)
