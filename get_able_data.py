@@ -25,7 +25,7 @@ try:
     paData = urllib.request.urlopen(ableLive).read(35).decode("utf-8")
 
     if len(paData) < 35:
-        print(data)
+        print(data, end="")
         sys.exit(0)
 
     dataArr = list(data)
@@ -35,8 +35,8 @@ try:
             dataArr[pos] = paData[pos]
             dataArr[pos+1] = paData[pos+1]
 
-    print("".join(dataArr))
+    print("".join(dataArr), end="")
 except urllib.error.HTTPError as e:
-    print(data)
+    print(data, end="")
 except urllib.error.URLError as e:
-    print(data)
+    print(data, end="")

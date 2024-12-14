@@ -36,7 +36,7 @@ int checkInternet() {
 // Returns 0 on success
 ///
 int fetchData() {
-    FILE *pipe = popen("/home/pi/able-display/get_able_data.py`", "r");
+    FILE *pipe = popen("/home/pi/able-display/get_able_data.py", "r");
     if (!pipe) {
         return 9;
     }
