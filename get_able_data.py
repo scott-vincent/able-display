@@ -3,7 +3,7 @@ import sys
 import urllib.request
 import urllib.error
 
-fr24Data = "/tmp/fr24_data"
+fr24Data = "/mem/fr24_data"
 ableLiveUrl = "/home/pi/able-live.uri"
 
 with open(ableLiveUrl) as inf:
