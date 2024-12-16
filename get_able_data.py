@@ -28,6 +28,14 @@ try:
         print(data)
         sys.exit(0)
 
+    if data[2] != ',':
+        print(paData)
+        sys.exit(0)
+
+    if paData[2] != ',':
+        print(data)
+        sys.exit(0)
+
     dataArr = list(data)
     for i in range(12):
         pos = i * 3

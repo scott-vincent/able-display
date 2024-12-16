@@ -6,10 +6,10 @@
 
 sevensegment* sevenSegment;
 unsigned char buf1[8], buf2[8], buf3[8], buf4[8];
-unsigned char prevBuf1[8], prevBuf2[8], prevBuf3[8], prevBuf4[8];
 bool dimmed = false;
 bool prevDimmed = false;
 char ableData[64];
+char prevAbleData[64];
 int errorDuration = 0;
 
 ///
@@ -81,13 +81,13 @@ void updateDisplay() {
         prevDimmed = dimmed;
     }
 
-    if (strncmp((char*)buf1, (char*)prevBuf1, 8) != 0 || strncmp((char*)buf2, (char*)prevBuf2, 8) != 0 ||
-        strncmp((char*)buf3, (char*)prevBuf3, 8) != 0 || strncmp((char*)buf4, (char*)prevBuf4, 8) != 0) {
+    if (strncmp(prevAbleData, ableData, 35) != 0) {
         sevenSegment->writeSegData4(buf1, buf2, buf3, buf4);
-        strncpy((char*)prevBuf1, (char*)buf1,  8);
-        strncpy((char*)prevBuf2, (char*)buf2,  8);
-        strncpy((char*)prevBuf3, (char*)buf3,  8);
-        strncpy((char*)prevBuf4, (char*)buf4,  8);
+        strncpy(prevAbleData, ableData, 35);
+        //printf("Updated: %35.35s\n", ableData);
+    }
+    else {
+        //printf("Same: %35.35s\n", ableData);
     }
 }
 
@@ -145,10 +145,7 @@ int main(int argc, char **argv)
 {
     printf("Running\n");
 
-    prevBuf1[0] = 'x';
-    prevBuf2[0] = 'x';
-    prevBuf3[0] = 'x';
-    prevBuf4[0] = 'x';
+    *prevAbleData = '\0';
 
     sevenSegment = new sevensegment(true, 0);
 
