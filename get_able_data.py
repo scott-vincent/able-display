@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import sys
+import socket
 import urllib.request
 import urllib.error
 
@@ -9,16 +10,37 @@ ableLiveUrl = "/home/pi/able-live.uri"
 with open(ableLiveUrl) as inf:
     ableLive = inf.read()
 
-try:
-    with open(fr24Data) as inf:
-        data = inf.read(35)
+if socket.gethostname() == "able-display":
+    try:
+        with open(fr24Data) as inf:
+            data = inf.read(35)
 
-    if len(data) < 35:
-        print("No data yet")
+        if len(data) < 35:
+            print("No data yet")
+            sys.exit(0)
+    except OSError as e:
+        print(f"File not found looking for {fr24Data}")
         sys.exit(0)
-except OSError as e:
-    print(f"File not found looking for {fr24Data}")
-    sys.exit(0)
+else:
+    ableDataUrl = "/home/pi/able-display-al.uri"
+
+    with open(ableDataUrl) as inf:
+        ableData = inf.read()
+
+    try:
+        data = urllib.request.urlopen(ableData).read(35).decode("utf-8")
+
+        if len(data) < 35:
+            print("No data yet")
+            sys.exit(0)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            print("File not found looking for able-display data")
+        else:
+            print(f"Tailscale error: {e.code}")
+    except urllib.error.URLError as e:
+        print(f"Failed to connect to server with error: {e.reason}")
+
 
 # Overwrite fr24 data with PilotAware data
 try:
