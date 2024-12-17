@@ -84,10 +84,6 @@ void updateDisplay() {
     if (strncmp(prevAbleData, ableData, 35) != 0) {
         sevenSegment->writeSegData4(buf1, buf2, buf3, buf4);
         strncpy(prevAbleData, ableData, 35);
-        //printf("Updated: %35.35s\n", ableData);
-    }
-    else {
-        //printf("Same: %35.35s\n", ableData);
     }
 }
 

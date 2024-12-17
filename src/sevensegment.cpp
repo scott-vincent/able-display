@@ -173,7 +173,7 @@ void sevensegment::decimalSegData(unsigned char* buf, int pos)
 /// </summary>
 void sevensegment::writeSegHex(int display, char* hex)
 {
-    unsigned char regData[6];
+    unsigned char regData[8];
     int strLen = strlen(hex);
     char ch;
     int num;
