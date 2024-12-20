@@ -33,7 +33,10 @@
 /// </summary>
 sevensegment::sevensegment(bool initWiringPi, int spiChannel)
 {
+    char hostname[256];
     char hex[256];
+
+    gethostname(hostname, 256);
 
     channel = spiChannel;
 
@@ -49,12 +52,24 @@ sevensegment::sevensegment(bool initWiringPi, int spiChannel)
     // Intialise all displays. Displays hyphens to show
     // displays have been initialised successfully.
 
-    // Set brightness to 4, i.e. '0a04'
-    strcpy(hex, "0f000c010a0409ff0b0701880288038804880588068807880888");
-    writeSegHex(1, hex);
-    writeSegHex(2, hex);
-    writeSegHex(3, hex);
-    writeSegHex(4, hex);
+    if (strcmp(hostname, "able-display-al") == 0) {
+        // Set brightness to 1, i.e. '0a01'
+        strcpy(hex, "0f000c010a0109ff0b0701880288038804880588068807880888");
+        writeSegHex(1, hex);
+        writeSegHex(2, hex);
+        writeSegHex(3, hex);
+        // Set brightness to max, i.e. '0a0f'
+        strcpy(hex, "0f000c010a0f09ff0b0701880288038804880588068807880888");
+        writeSegHex(4, hex);
+    }
+    else {
+        // Set brightness to 4, i.e. '0a04'
+        strcpy(hex, "0f000c010a0409ff0b0701880288038804880588068807880888");
+        writeSegHex(1, hex);
+        writeSegHex(2, hex);
+        writeSegHex(3, hex);
+        writeSegHex(4, hex);
+    }
 
     // Clear displays after a short delay
     delayMicroseconds(1500000);

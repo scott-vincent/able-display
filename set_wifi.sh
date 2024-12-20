@@ -55,7 +55,7 @@ do
     then
         echo ""
         echo Wifi connected successfully.
-        echo Please remove the ethernet lead.
+        echo Now remove the ethernet lead and power the display off and on again.
         while [ 1 ]
         do
             ip=`/home/pi/able-display/get_eth0_ip.sh`
@@ -63,7 +63,7 @@ do
             then
                 exit
             fi
-            sleep 1
+            sleep 3
         done
     else
         echo ""

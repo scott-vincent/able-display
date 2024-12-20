@@ -1,11 +1,10 @@
 [Unit]
 Description=able_display Service
-After=network.target
+After=multi-user.target
 StartLimitIntervalSec=10
 
 [Service]
-User=pi
-ExecStartPre=/bin/sh -c 'until ping -c1 google.com; do sleep 10; done;'
+User=root
 ExecStart=/home/pi/able-display/able_display
 Restart=on-failure
 RestartSec=60

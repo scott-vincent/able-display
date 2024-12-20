@@ -8,8 +8,8 @@ sevensegment* sevenSegment;
 unsigned char buf1[8], buf2[8], buf3[8], buf4[8];
 bool dimmed = false;
 bool prevDimmed = false;
-char ableData[64];
-char prevAbleData[64];
+char ableData[128];
+char prevAbleData[128];
 int errorDuration = 0;
 
 ///
@@ -41,7 +41,7 @@ int fetchData() {
         return 9;
     }
 
-    int bytes = fread(ableData, 1, 64, pipe);
+    int bytes = fread(ableData, 1, 128, pipe);
     pclose(pipe);
 
     if (bytes > 6 && ableData[0] == '#') {
@@ -52,7 +52,8 @@ int fetchData() {
     if (bytes != 36) {
         int err = checkInternet();
         if (err != 0) {
-            printf("Internet error: %d\n", err);
+            sprintf(ableData, "Internet error: %d\n", err);
+            printf(ableData);
             return err;
         }
 

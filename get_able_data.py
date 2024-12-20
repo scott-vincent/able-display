@@ -16,7 +16,7 @@ fr24Data = "/mem/fr24_data"
 ableLiveUrl = "/home/pi/able-live.uri"
 
 with open(ableLiveUrl) as inf:
-    ableLive = inf.read()
+    ableLive = inf.read().strip()
 
 if socket.gethostname() == "able-display":
     try:
@@ -33,7 +33,7 @@ else:
     ableDataUrl = "/home/pi/able-display-al.uri"
 
     with open(ableDataUrl) as inf:
-        ableData = inf.read()
+        ableData = inf.read().strip()
 
     try:
         data = urllib.request.urlopen(ableData).read(35).decode("utf-8")
@@ -46,9 +46,10 @@ else:
             print("File not found looking for able-display data")
         else:
             print(f"Tailscale error: {e.code}")
+        sys.exit(0)
     except urllib.error.URLError as e:
         print(f"Failed to connect to server with error: {e.reason}")
-
+        sys.exit(0)
 
 # Overwrite fr24 data with PilotAware data
 try:
