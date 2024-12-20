@@ -44,6 +44,11 @@ int fetchData() {
     int bytes = fread(ableData, 1, 64, pipe);
     pclose(pipe);
 
+    if (bytes > 6 && ableData[0] == '#') {
+        // Found eth0 ip address
+        return 5;
+    }
+
     if (bytes != 36) {
         int err = checkInternet();
         if (err != 0) {
@@ -134,6 +139,43 @@ void displayError(int err) {
     updateDisplay();
 }
 
+void displayIp() {
+    dimmed = false;
+
+    sevenSegment->blankSegData(buf1, 8, false);
+    sevenSegment->blankSegData(buf2, 8, false);
+    sevenSegment->blankSegData(buf3, 8, false);
+    sevenSegment->blankSegData(buf4, 8, false);
+
+    int displayPos = 0;
+    unsigned char *bufCh;
+
+    for (int pos = 1; ableData[pos] != '\n' && ableData[pos] != '\0'; pos++) {
+        if (displayPos < 8) {
+            bufCh = &buf1[displayPos];
+        }
+        else {
+            bufCh = &buf2[displayPos - 8];
+        }
+
+        sevenSegment->getSegData(bufCh, 1, ableData[pos] - '0', 1);
+
+        if (ableData[pos+1] == '.') {
+            sevenSegment->decimalSegData(bufCh, 0);
+            pos++;
+        }
+
+        displayPos++;
+        int nextPos = displayPos % 8;
+        if (nextPos == 2 || nextPos == 5) {
+            displayPos++;
+        }
+
+    }
+
+    updateDisplay();
+}
+
 ///
 /// main
 ///
@@ -147,6 +189,14 @@ int main(int argc, char **argv)
 
     while (true) {
         int err = fetchData();
+
+        if (err == 5) {
+            // Connected to eth0 so show ip
+            displayIp();
+            errorDuration = 12;
+            sleep(1);
+            continue;
+        }
 
         if (err == 0) {
             errorDuration = 0;

@@ -3,6 +3,14 @@ import sys
 import socket
 import urllib.request
 import urllib.error
+import subprocess
+from subprocess import Popen, PIPE
+
+session = subprocess.Popen(["/home/pi/able-display/get_eth0_ip.sh"], stdout=PIPE)
+ip = session.communicate()[0].decode("utf-8").strip()
+if "." in ip:
+    print(f"#{ip}")
+    sys.exit(0)
 
 fr24Data = "/mem/fr24_data"
 ableLiveUrl = "/home/pi/able-live.uri"
