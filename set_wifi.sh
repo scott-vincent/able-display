@@ -55,16 +55,10 @@ do
     then
         echo ""
         echo Wifi connected successfully.
-        echo Now remove the ethernet lead and power the display off and on again.
-        while [ 1 ]
-        do
-            ip=`/home/pi/able-display/get_eth0_ip.sh`
-            if [ "$ip" = "" ]
-            then
-                exit
-            fi
-            sleep 3
-        done
+        echo Now remove the ethernet lead. The display will be rebooted in 10 seconds.
+        sudo nmcli con reload
+        sleep 5
+        sudo reboot
     else
         echo ""
         echo Wifi connection failed. Please try again.
