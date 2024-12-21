@@ -52,7 +52,7 @@ sevensegment::sevensegment(bool initWiringPi, int spiChannel)
     // Intialise all displays. Displays hyphens to show
     // displays have been initialised successfully.
 
-    if (strcmp(hostname, "able-display-al") == 0) {
+    if (strcmp(hostname, "able-display-alx") == 0) {
         // Set brightness to 1, i.e. '0a01'
         strcpy(hex, "0f000c010a0109ff0b0701880288038804880588068807880888");
         writeSegHex(1, hex);
